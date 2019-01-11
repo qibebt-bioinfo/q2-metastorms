@@ -93,7 +93,7 @@ plugin.methods.register_function(
     output_descriptions={
         'results': 'MetaStorms results',
     },
-    name='search',
+    name='Make a Meta-Storms database by OTU table',
     description='Make a Meta-Storms database by OTU table'
 )
 
@@ -112,7 +112,7 @@ plugin.methods.register_function(
     output_descriptions={
         'results': 'MetaStorms database',
     },
-    name='make',
+    name='Make a Meta-Storms database by OTU table',
     description='Make a Meta-Storms database by OTU table'
 )
 
@@ -143,7 +143,7 @@ plugin.methods.register_function(
     output_descriptions={
         'results': 'The observed samples',
     },
-    name='parse_meta',
+    name='Meta-data prediction by search results',
     description='Meta-data prediction by search results'
 )
 
@@ -170,7 +170,7 @@ plugin.methods.register_function(
     output_descriptions={
         'results': 'The observed samples',
     },
-    name='parse_mns',
+    name='MNS (Microbiome Novelty Score) calculation by search results',
     description='MNS (Microbiome Novelty Score) calculation by search results'
 )
 
