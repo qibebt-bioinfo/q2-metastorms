@@ -101,11 +101,11 @@ def search(database: MetaStormsDatabaseDirFmt, table: biom.Table,
     return result_fname
 
 
-def make(table: biom.Table) -> str:
+def make(input: biom.Table) -> str:
     tmpdir = tempfile.mkdtemp()
     table_fname = os.path.join(tmpdir, 'table.counts')
     result_fname = os.path.join(tmpdir, 'database')
-    _write_counts_table(table_fname, table)
+    _write_counts_table(table_fname, input)
     run_command(_build_make_command(table_fname, result_fname))
     return result_fname + '.mdb'
 
