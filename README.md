@@ -12,12 +12,15 @@ a. Download the package:
 ```
 git clone https://github.com/qibebt-bioinfo/q2-metastorms.git
 ```
-b. Install by installer:
+b. Install:
 ```
 cd q2-metastorms
 pip install -e .
 qiime dev refresh-cache
 ```
+The package should take less than 1 minute to install on a computer with the specifications recommended above.
+
+The example dataset could be found at “example” folder. Check the “example/Readme” for details about the demo run.
 
 # Notics for input
 The input OTUs should be parsed by QIIME 2 closed-reference clustering against the Greengenes 13_8 97% OTUs reference database. For details about the OTU clustering, see https://docs.qiime2.org/2018.11/tutorials/otu-clustering
