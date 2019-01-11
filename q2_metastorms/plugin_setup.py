@@ -100,7 +100,7 @@ plugin.methods.register_function(
 
 plugin.methods.register_function(
     function=q2_metastorms.make,
-    inputs={'table': FeatureTable[Frequency]},
+    inputs={'input': FeatureTable[Frequency]},
     parameters={},
     outputs=[
         ('results', MetaStormsDatabase),
