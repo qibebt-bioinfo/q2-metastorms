@@ -10,7 +10,7 @@ Please install the Meta-Storms 2 software first. For details of Meta-Storms 2 in
 # Installation guide
 a. Download the package:
 ```
-git clone git@github.com:qibebt-bioinfo/q2-metastorms.git
+git clone https://github.com/qibebt-bioinfo/q2-metastorms.git
 ```
 b. Install by installer:
 ```
