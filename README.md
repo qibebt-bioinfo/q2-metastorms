@@ -1,5 +1,5 @@
 # q2-metastorms
-This is the official repository of Meta-Storms 2 for QIIME 2 plugin.
+This is the official repository of QIIME 2 plugin for Meta-Storms 2.
 
 # Introduction
 This is a QIIME 2 plugin of Meta-Storms 2. For details of Meta-Storms 2, see https://github.com/qibebt-bioinfo/meta-storms. For details on QIIME 2, see https://qiime2.org.
