@@ -1,0 +1,30 @@
+#Here we provide a demo dataset with 20 human oral microbiome samples
+#in 2 different healthy status produced by Huang, et al., 2014. 
+#
+#File description
+#taxa.OTU.qza: OTU table that profiled by Parallel-META 3 (version 3.4.4).
+#meta.txt: Meta-data, "B" for healthy baseline, "I" for natural gingivitis. 
+#
+#To run the demo, you can either 
+#
+#sh Readme
+#
+#or
+#type the following 3 commands. 
+#
+#Commands:
+#Make database
+qiime metastorms make --i-table taxa.OTU.qza --o-results database
+#
+#Search database
+qiime metastorms search --i-database database.qza --i-table taxa.OTU.qza --o-results search_result
+#
+#Predict healthy status
+qiime metastorms parse-meta --i-query-results search_result.qza --m-metadata-file meta.txt --o-results parse_meta_result
+#
+#Output description
+#database.qza: The built database by the input OTU table.
+#search_result.qza: The top 10 hits of input query samples.
+#parse_meta_result.qza: The predicted healthy status of the query samples.
+#
+#This demo run should take less than 1 minute on a recommended computer.
