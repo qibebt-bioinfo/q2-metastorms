@@ -14,10 +14,10 @@
 #
 #Commands:
 #Make database
-qiime metastorms make --i-table taxa.OTU.qza --o-results database
+qiime metastorms make-otu --i-table taxa.OTU.qza --o-results database
 #
 #Search database
-qiime metastorms search --i-database database.qza --i-table taxa.OTU.qza --o-results search_result
+qiime metastorms search-otu --i-database database.qza --i-table taxa.OTU.qza --o-results search_result
 #
 #Predict healthy status
 qiime metastorms parse-meta --i-query-results search_result.qza --m-metadata-file meta.txt --o-results parse_meta_result
