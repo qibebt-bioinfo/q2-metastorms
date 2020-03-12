@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Copyright (c) 2018, Meta-Storms development team.
+# Copyright (c) 2020, Meta-Storms development team.
 #
 # Distributed under the terms of the Modified BSD License.
 #
