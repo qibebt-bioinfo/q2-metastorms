@@ -11,12 +11,17 @@ import tempfile
 import biom
 
 from qiime2 import Artifact, Metadata
-from q2_metastorms._format import (MetaStormsDatabaseDirFmt,
+from q2_metastorms._format import (MetaStormsOTUDatabaseDirFmt,
+                                   MetaStormsSPDatabaseDirFmt,
+                                   MetaStormsFUNCDatabaseDirFmt,
                                    MetaStormsSearchResultsDirFmt)
 from q2_metastorms._type import (MetaStormsSearchResults,
-                                 MetaStormsDatabase,
+                                 MetaStormsOTUDatabase,
+                                 MetaStormsSPDatabase,
+                                 MetaStormsFUNCDatabase,
                                  MetaStormsMetaResults,
-                                 MetaStormsMNSResults)
+                                 MetaStormsMNSResults,
+                                 MetaStormsMASResults)
 
 _default_params = {
         'n_matched' : '10',
@@ -42,10 +47,30 @@ def run_command(cmd, verbose=True):
     subprocess.run(cmd, check=True)
 
 
-def _build_search_command(table_fname, database_fname, result_fname,
+def _build_search_otu_command(table_fname, database_fname, result_fname,
                           n_matched, minimum_similarity, enable_exhaustive_search, 
                           if_weighted, cpu_core_number):
-    cmd = ['MetaDB-search', '-T', table_fname, '-d', database_fname, '-o', result_fname, 
+    cmd = ['MetaDB-search-otu', '-T', table_fname, '-d', database_fname, '-o', result_fname, 
+            '-n', n_matched, '-m', minimum_similarity, '-e', enable_exhaustive_search,
+            '-w', if_weighted]
+    if (cpu_core_number):
+        cmd += ['-t', cpu_core_number]
+    return cmd
+
+def _build_search_sp_command(table_fname, database_fname, result_fname,
+                          n_matched, minimum_similarity, enable_exhaustive_search, 
+                          if_weighted, cpu_core_number):
+    cmd = ['MetaDB-search-sp', '-T', table_fname, '-d', database_fname, '-o', result_fname, 
+            '-n', n_matched, '-m', minimum_similarity, '-e', enable_exhaustive_search,
+            '-w', if_weighted]
+    if (cpu_core_number):
+        cmd += ['-t', cpu_core_number]
+    return cmd
+
+def _build_search_func_command(table_fname, database_fname, result_fname,
+                          n_matched, minimum_similarity, enable_exhaustive_search, 
+                          if_weighted, cpu_core_number):
+    cmd = ['MetaDB-search-func', '-T', table_fname, '-d', database_fname, '-o', result_fname, 
             '-n', n_matched, '-m', minimum_similarity, '-e', enable_exhaustive_search,
             '-w', if_weighted]
     if (cpu_core_number):
@@ -65,9 +90,20 @@ def _build_parse_mns_command(query_fname, result_fname, base_of_similarity,
             '-o', result_fname, '-b', base_of_similarity,
             '-n', max_number_matches, '-s', number_of_skipped]
 
-def _build_make_command(input_otu_table, output_database_name):
-    return ['MetaDB-make', '-T', input_otu_table, '-o', output_database_name]
+def _build_parse_mas_command(query_fname, result_fname, base_of_similarity, 
+                             max_number_matches, number_of_skipped):
+    return ['MetaDB-parse-mas', '-i', query_fname,
+            '-o', result_fname, '-b', base_of_similarity,
+            '-n', max_number_matches, '-s', number_of_skipped]
 
+def _build_make_otu_command(input_otu_table, output_database_name):
+    return ['MetaDB-make-otu', '-T', input_otu_table, '-o', output_database_name]
+
+def _build_make_sp_command(input_otu_table, output_database_name):
+    return ['MetaDB-make-sp', '-T', input_otu_table, '-o', output_database_name]
+
+def _build_make_func_command(input_otu_table, output_database_name):
+    return ['MetaDB-make-func', '-T', input_otu_table, '-o', output_database_name]
 
 def _write_counts_table(table_fname, table):
     out = open(table_fname, 'w')
@@ -85,7 +121,7 @@ def _write_counts_table(table_fname, table):
     out.close()
 
 
-def search(database: MetaStormsDatabaseDirFmt, table: biom.Table,
+def search_otu(database: MetaStormsOTUDatabaseDirFmt, table: biom.Table,
            n_matched: str = _default_params['n_matched'],
            minimum_similarity: str = _default_params['minimum_similarity'],
            enable_exhaustive_search: str = _default_params['enable_exhaustive_search'],
@@ -96,19 +132,63 @@ def search(database: MetaStormsDatabaseDirFmt, table: biom.Table,
     result_fname = os.path.join(tmpdir, 'query.out')
     db_path = os.path.join(str(database), 'database.mdb')
     _write_counts_table(table_fname, table)
-    run_command(_build_search_command(table_fname, db_path, result_fname, 
+    run_command(_build_search_otu_command(table_fname, db_path, result_fname, 
                 n_matched, minimum_similarity, enable_exhaustive_search, if_weighted, cpu_core_number))
     return result_fname
 
+def search_sp(database: MetaStormsSPDatabaseDirFmt, table: biom.Table,
+           n_matched: str = _default_params['n_matched'],
+           minimum_similarity: str = _default_params['minimum_similarity'],
+           enable_exhaustive_search: str = _default_params['enable_exhaustive_search'],
+           if_weighted: str = _default_params['if_weighted'],
+           cpu_core_number: str = _default_params['cpu_core_number']) -> str:
+    tmpdir = tempfile.mkdtemp()
+    table_fname = os.path.join(tmpdir, 'table.counts')
+    result_fname = os.path.join(tmpdir, 'query.out')
+    db_path = os.path.join(str(database), 'database.mdbs')
+    _write_counts_table(table_fname, table)
+    run_command(_build_search_sp_command(table_fname, db_path, result_fname, 
+                n_matched, minimum_similarity, enable_exhaustive_search, if_weighted, cpu_core_number))
+    return result_fname
 
-def make(table: biom.Table) -> str:
+def search_func(database: MetaStormsFUNCDatabaseDirFmt, table: biom.Table,
+           n_matched: str = _default_params['n_matched'],
+           minimum_similarity: str = _default_params['minimum_similarity'],
+           enable_exhaustive_search: str = _default_params['enable_exhaustive_search'],
+           if_weighted: str = _default_params['if_weighted'],
+           cpu_core_number: str = _default_params['cpu_core_number']) -> str:
+    tmpdir = tempfile.mkdtemp()
+    table_fname = os.path.join(tmpdir, 'table.counts')
+    result_fname = os.path.join(tmpdir, 'query.out')
+    db_path = os.path.join(str(database), 'database.mdb')
+    _write_counts_table(table_fname, table)
+    run_command(_build_search_func_command(table_fname, db_path, result_fname, 
+                n_matched, minimum_similarity, enable_exhaustive_search, if_weighted, cpu_core_number))
+    return result_fname
+
+def make_otu(table: biom.Table) -> str:
     tmpdir = tempfile.mkdtemp()
     table_fname = os.path.join(tmpdir, 'table.counts')
     result_fname = os.path.join(tmpdir, 'database')
     _write_counts_table(table_fname, table)
-    run_command(_build_make_command(table_fname, result_fname))
+    run_command(_build_make_otu_command(table_fname, result_fname))
     return result_fname + '.mdb'
 
+def make_sp(table: biom.Table) -> str:
+    tmpdir = tempfile.mkdtemp()
+    table_fname = os.path.join(tmpdir, 'table.counts')
+    result_fname = os.path.join(tmpdir, 'database')
+    _write_counts_table(table_fname, table)
+    run_command(_build_make_sp_command(table_fname, result_fname))
+    return result_fname + '.mdbs'
+
+def make_func(table: biom.Table) -> str:
+    tmpdir = tempfile.mkdtemp()
+    table_fname = os.path.join(tmpdir, 'table.counts')
+    result_fname = os.path.join(tmpdir, 'database')
+    _write_counts_table(table_fname, table)
+    run_command(_build_make_sp_command(table_fname, result_fname))
+    return result_fname + '.mdbf'
 
 def parse_meta(query_results: MetaStormsSearchResultsDirFmt,
                metadata: Metadata, 
@@ -138,3 +218,13 @@ def parse_mns(query_results: MetaStormsSearchResultsDirFmt,
                                          max_number_matches, number_of_skipped))
     return result_fname
 
+def parse_mas(query_results: MetaStormsSearchResultsDirFmt,
+              base_of_similarity: str = _default_params['base_of_similarity'], 
+              max_number_matches: str = _default_params['max_number_matches'], 
+              number_of_skipped: str = _default_params['number_of_skipped']) -> str:
+    tmpdir = tempfile.mkdtemp()
+    qr_path = os.path.join(str(query_results), 'query.out')
+    result_fname = os.path.join(tmpdir, 'query.out.mas')
+    run_command(_build_parse_mas_command(qr_path, result_fname, base_of_similarity, 
+                                         max_number_matches, number_of_skipped))
+    return result_fname

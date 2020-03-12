@@ -8,7 +8,10 @@
 
 from qiime2.plugin import SemanticType
 
-MetaStormsDatabase = SemanticType('MetaStormsDatabase')
+MetaStormsOTUDatabase = SemanticType('MetaStormsOTUDatabase')
+MetaStormsSPDatabase = SemanticType('MetaStormsSPDatabase')
+MetaStormsFUNCDatabase = SemanticType('MetaStormsFUNCDatabase')
 MetaStormsSearchResults = SemanticType('MetaStormsSearchResults')
 MetaStormsMetaResults = SemanticType('MetaStormsMetaResults')
 MetaStormsMNSResults = SemanticType('MetaStormsMNSResults')
+MetaStormsMASResults = SemanticType('MetaStormsMASResults')

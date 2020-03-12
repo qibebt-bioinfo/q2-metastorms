@@ -9,7 +9,19 @@
 import qiime2.plugin.model as model
 
 
-class MetaStormsDatabaseFmt(model.TextFileFormat):
+class MetaStormsOTUDatabaseFmt(model.TextFileFormat):
+    def sniff(self):
+        # Not sure what should be done to validate the contents
+        return True
+
+
+class MetaStormsSPDatabaseFmt(model.TextFileFormat):
+    def sniff(self):
+        # Not sure what should be done to validate the contents
+        return True
+
+
+class MetaStormsFUNCDatabaseFmt(model.TextFileFormat):
     def sniff(self):
         # Not sure what should be done to validate the contents
         return True
@@ -33,12 +45,23 @@ class MetaStormsMNSResultsFmt(model.TextFileFormat):
         return True
 
 
-MetaStormsDatabaseDirFmt = model.SingleFileDirectoryFormat(
-    'MetaStormsDatabaseDirFmt', 'database.mdb', MetaStormsDatabaseFmt)
+class MetaStormsMASResultsFmt(model.TextFileFormat):
+    def sniff(self):
+        # Not sure what should be done to validate the contents
+        return True
+
+
+MetaStormsOTUDatabaseDirFmt = model.SingleFileDirectoryFormat(
+    'MetaStormsOTUDatabaseDirFmt', 'database.mdb', MetaStormsOTUDatabaseFmt)
+MetaStormsSPDatabaseDirFmt = model.SingleFileDirectoryFormat(
+    'MetaStormsSPDatabaseDirFmt', 'database.mdbs', MetaStormsSPDatabaseFmt)
+MetaStormsFUNCDatabaseDirFmt = model.SingleFileDirectoryFormat(
+    'MetaStormsFUNCDatabaseDirFmt', 'database.mdbf', MetaStormsFUNCDatabaseFmt)
 MetaStormsSearchResultsDirFmt = model.SingleFileDirectoryFormat(
     'MetaStormsSearchResultsDirFmt', 'query.out', MetaStormsSearchResultsFmt)
 MetaStormsMetaResultsDirFmt = model.SingleFileDirectoryFormat(
     'MetaStormsMetaResultsDirFmt', 'query.out.meta', MetaStormsMetaResultsFmt)
 MetaStormsMNSResultsDirFmt = model.SingleFileDirectoryFormat(
     'MetaStormsMNSResultsDirFmt', 'query.out.mns', MetaStormsMNSResultsFmt)
-
+MetaStormsMASResultsDirFmt = model.SingleFileDirectoryFormat(
+    'MetaStormsMASResultsDirFmt', 'query.out.mns', MetaStormsMASResultsFmt)

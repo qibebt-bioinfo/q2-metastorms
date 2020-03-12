@@ -10,13 +10,26 @@ import shutil
 
 from .plugin_setup import plugin
 from q2_metastorms._format import (MetaStormsSearchResultsDirFmt,
-                                 MetaStormsDatabaseDirFmt,
+                                 MetaStormsOTUDatabaseDirFmt,
+                                 MetaStormsSPDatabaseDirFmt,
+                                 MetaStormsFUNCDatabaseDirFmt,
                                  MetaStormsMetaResultsDirFmt,
-                                 MetaStormsMNSResultsDirFmt)
+                                 MetaStormsMNSResultsDirFmt,
+                                 MetaStormsMASResultsDirFmt)
 
 @plugin.register_transformer
-def _1(path: str) -> MetaStormsDatabaseDirFmt:
-    ff = MetaStormsDatabaseDirFmt()
+def _1(path: str) -> MetaStormsOTUDatabaseDirFmt:
+    ff = MetaStormsOTUDatabaseDirFmt()
+    shutil.copy(path, str(ff))
+    return ff
+
+def _1(path: str) -> MetaStormsSPDatabaseDirFmt:
+    ff = MetaStormsSPDatabaseDirFmt()
+    shutil.copy(path, str(ff))
+    return ff
+
+def _1(path: str) -> MetaStormsFUNCDatabaseDirFmt:
+    ff = MetaStormsFUNCDatabaseDirFmt()
     shutil.copy(path, str(ff))
     return ff
 
@@ -38,3 +51,7 @@ def _4(path: str) -> MetaStormsMNSResultsDirFmt:
     shutil.copy(path, str(ff))
     return ff
 
+def _4(path: str) -> MetaStormsMASResultsDirFmt:
+    ff = MetaStormsMASResultsDirFmt()
+    shutil.copy(path, str(ff))
+    return ff
