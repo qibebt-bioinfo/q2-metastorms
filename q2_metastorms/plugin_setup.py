@@ -85,11 +85,6 @@ plugin.register_semantic_type_to_format(
     MetaStormsMNSResults,
     artifact_format=MetaStormsMNSResultsDirFmt)
 
-plugin.register_semantic_types(MetaStormsMASResults)
-plugin.register_semantic_type_to_format(
-    MetaStormsMASResults,
-    artifact_format=MetaStormsMASResultsDirFmt)
-
 plugin.methods.register_function(
     function=q2_metastorms.search_otu,
     inputs={'database': MetaStormsOTUDatabase,
