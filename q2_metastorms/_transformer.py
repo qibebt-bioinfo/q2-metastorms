@@ -14,8 +14,7 @@ from q2_metastorms._format import (MetaStormsSearchResultsDirFmt,
                                  MetaStormsSPDatabaseDirFmt,
                                  MetaStormsFUNCDatabaseDirFmt,
                                  MetaStormsMetaResultsDirFmt,
-                                 MetaStormsMNSResultsDirFmt,
-                                 MetaStormsMASResultsDirFmt)
+                                 MetaStormsMNSResultsDirFmt)
 
 @plugin.register_transformer
 def _1(path: str) -> MetaStormsOTUDatabaseDirFmt:
@@ -28,30 +27,25 @@ def _1(path: str) -> MetaStormsSPDatabaseDirFmt:
     shutil.copy(path, str(ff))
     return ff
 
-def _1(path: str) -> MetaStormsFUNCDatabaseDirFmt:
+def _2(path: str) -> MetaStormsFUNCDatabaseDirFmt:
     ff = MetaStormsFUNCDatabaseDirFmt()
     shutil.copy(path, str(ff))
     return ff
 
 @plugin.register_transformer
-def _2(path: str) -> MetaStormsSearchResultsDirFmt:
+def _3(path: str) -> MetaStormsSearchResultsDirFmt:
     ff = MetaStormsSearchResultsDirFmt()
     shutil.copy(path, str(ff))
     return ff
 
 @plugin.register_transformer
-def _3(path: str) -> MetaStormsMetaResultsDirFmt:
+def _4(path: str) -> MetaStormsMetaResultsDirFmt:
     ff = MetaStormsMetaResultsDirFmt()
     shutil.copy(path, str(ff))
     return ff
 
 @plugin.register_transformer
-def _4(path: str) -> MetaStormsMNSResultsDirFmt:
+def _5(path: str) -> MetaStormsMNSResultsDirFmt:
     ff = MetaStormsMNSResultsDirFmt()
-    shutil.copy(path, str(ff))
-    return ff
-
-def _4(path: str) -> MetaStormsMASResultsDirFmt:
-    ff = MetaStormsMASResultsDirFmt()
     shutil.copy(path, str(ff))
     return ff
