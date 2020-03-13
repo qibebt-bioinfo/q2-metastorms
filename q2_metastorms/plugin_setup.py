@@ -17,8 +17,7 @@ from q2_metastorms._type import (MetaStormsOTUDatabase,
                                  MetaStormsFUNCDatabase,
                                  MetaStormsSearchResults,
                                  MetaStormsMetaResults,
-                                 MetaStormsMNSResults,
-                                 MetaStormsMASResults)
+                                 MetaStormsMNSResults)
 from q2_metastorms._format import (MetaStormsOTUDatabaseFmt,
                                    MetaStormsOTUDatabaseDirFmt,
                                    MetaStormsSPDatabaseFmt,
@@ -30,9 +29,7 @@ from q2_metastorms._format import (MetaStormsOTUDatabaseFmt,
                                    MetaStormsMetaResultsFmt,
                                    MetaStormsMetaResultsDirFmt,
                                    MetaStormsMNSResultsFmt,
-                                   MetaStormsMNSResultsDirFmt,
-                                   MetaStormsMASResultsFmt,
-                                   MetaStormsMASResultsDirFmt)
+                                   MetaStormsMNSResultsDirFmt)
 
 plugin = qiime2.plugin.Plugin(
     name='metastorms',
@@ -57,8 +54,6 @@ plugin.register_formats(MetaStormsMetaResultsFmt,
                         MetaStormsMetaResultsDirFmt)
 plugin.register_formats(MetaStormsMNSResultsFmt,
                         MetaStormsMNSResultsDirFmt)
-plugin.register_formats(MetaStormsMASResultsFmt,
-                        MetaStormsMASResultsDirFmt)
 
 plugin.register_semantic_types(MetaStormsOTUDatabase)
 plugin.register_semantic_type_to_format(
@@ -302,30 +297,5 @@ plugin.methods.register_function(
     description='MNS (Microbiome Novelty Score) calculation by search results'
 )
 
-plugin.methods.register_function(
-    function=q2_metastorms.parse_mas,
-    inputs={'query_results': MetaStormsSearchResults},
-    parameters={
-            'base_of_similarity' : qiime2.plugin.Str,
-            'max_number_matches' : qiime2.plugin.Str,
-            'number_of_skipped' : qiime2.plugin.Str,
-    },
-    outputs=[
-        ('results', MetaStormsMASResults),
-    ],
-    input_descriptions={
-        'query_results': 'Results from a metaastorms search',
-    },
-    parameter_descriptions={
-        'base_of_similarity' : 'Base of the similarity in the input file, default is 0',
-        'max_number_matches' : 'Max number of matches in the input file, default is 10',
-        'number_of_skipped' : '-s Number of skipped matches in the input file, default is 0'
-    },
-    output_descriptions={
-        'results': 'The observed samples',
-    },
-    name='MAS (Microbiome Ateention Score) calculation by search results',
-    description='MAS (Microbiome Ateention Score) calculation by search results'
-)
 
 importlib.import_module('q2_metastorms._transformer')
