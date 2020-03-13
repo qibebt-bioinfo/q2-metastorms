@@ -20,8 +20,7 @@ from q2_metastorms._type import (MetaStormsSearchResults,
                                  MetaStormsSPDatabase,
                                  MetaStormsFUNCDatabase,
                                  MetaStormsMetaResults,
-                                 MetaStormsMNSResults,
-                                 MetaStormsMASResults)
+                                 MetaStormsMNSResults)
 
 _default_params = {
         'n_matched' : '10',
@@ -90,12 +89,6 @@ def _build_parse_mns_command(query_fname, result_fname, base_of_similarity,
             '-o', result_fname, '-b', base_of_similarity,
             '-n', max_number_matches, '-s', number_of_skipped]
 
-def _build_parse_mas_command(query_fname, result_fname, base_of_similarity, 
-                             max_number_matches, number_of_skipped):
-    return ['MetaDB-parse-mas', '-i', query_fname,
-            '-o', result_fname, '-b', base_of_similarity,
-            '-n', max_number_matches, '-s', number_of_skipped]
-
 def _build_make_otu_command(input_otu_table, output_database_name):
     return ['MetaDB-make-otu', '-T', input_otu_table, '-o', output_database_name]
 
@@ -160,7 +153,7 @@ def search_func(database: MetaStormsFUNCDatabaseDirFmt, table: biom.Table,
     tmpdir = tempfile.mkdtemp()
     table_fname = os.path.join(tmpdir, 'table.counts')
     result_fname = os.path.join(tmpdir, 'query.out')
-    db_path = os.path.join(str(database), 'database.mdb')
+    db_path = os.path.join(str(database), 'database.mdbf')
     _write_counts_table(table_fname, table)
     run_command(_build_search_func_command(table_fname, db_path, result_fname, 
                 n_matched, minimum_similarity, enable_exhaustive_search, if_weighted, cpu_core_number))
@@ -218,13 +211,3 @@ def parse_mns(query_results: MetaStormsSearchResultsDirFmt,
                                          max_number_matches, number_of_skipped))
     return result_fname
 
-def parse_mas(query_results: MetaStormsSearchResultsDirFmt,
-              base_of_similarity: str = _default_params['base_of_similarity'], 
-              max_number_matches: str = _default_params['max_number_matches'], 
-              number_of_skipped: str = _default_params['number_of_skipped']) -> str:
-    tmpdir = tempfile.mkdtemp()
-    qr_path = os.path.join(str(query_results), 'query.out')
-    result_fname = os.path.join(tmpdir, 'query.out.mas')
-    run_command(_build_parse_mas_command(qr_path, result_fname, base_of_similarity, 
-                                         max_number_matches, number_of_skipped))
-    return result_fname
