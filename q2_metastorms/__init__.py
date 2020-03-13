@@ -5,6 +5,6 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
-from ._methods import search_otu, make_otu, search_sp, make_sp, search_func, make_func, parse_meta, parse_mns, parse_mas
+from ._methods import search_otu, make_otu, search_sp, make_sp, search_func, make_func, parse_meta, parse_mns
 
-__all__ = ['search_otu', 'make_otu', 'search_sp', 'make_sp', 'search_func', 'make_func', 'parse_meta', 'parse_mns', 'parse_mas']
+__all__ = ['search_otu', 'make_otu', 'search_sp', 'make_sp', 'search_func', 'make_func', 'parse_meta', 'parse_mns']
