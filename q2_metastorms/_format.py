@@ -45,11 +45,6 @@ class MetaStormsMNSResultsFmt(model.TextFileFormat):
         return True
 
 
-class MetaStormsMASResultsFmt(model.TextFileFormat):
-    def sniff(self):
-        # Not sure what should be done to validate the contents
-        return True
-
 
 MetaStormsOTUDatabaseDirFmt = model.SingleFileDirectoryFormat(
     'MetaStormsOTUDatabaseDirFmt', 'database.mdb', MetaStormsOTUDatabaseFmt)
@@ -63,5 +58,3 @@ MetaStormsMetaResultsDirFmt = model.SingleFileDirectoryFormat(
     'MetaStormsMetaResultsDirFmt', 'query.out.meta', MetaStormsMetaResultsFmt)
 MetaStormsMNSResultsDirFmt = model.SingleFileDirectoryFormat(
     'MetaStormsMNSResultsDirFmt', 'query.out.mns', MetaStormsMNSResultsFmt)
-MetaStormsMASResultsDirFmt = model.SingleFileDirectoryFormat(
-    'MetaStormsMASResultsDirFmt', 'query.out.mns', MetaStormsMASResultsFmt)
